@@ -3,7 +3,7 @@
 ## Introduction
 The stochs library provides efficient C++ implementations of stochastic optimization algorithms for common machine learning settings,
 including situations with finite datasets augmented with random perturbations (e.g. data augmentation or dropout).
-The library is mainly from Python through a Cython extension.
+The library is mainly used from Python through a Cython extension.
 Currently, SGD, (S-)MISO and (N-)SAGA are supported, for dense and sparse data. See the following reference for details:
 
 A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for Infinite Datasets with Finite-Sum Structure](https://arxiv.org/abs/1610.00970). arXiv 1610.00970, 2017.
@@ -12,15 +12,15 @@ A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for In
 The library requires Eigen >=3.3 (the `Eigen` headers folder needs to be downloaded or symlinked into an `include` directory at the root of the repository)
 and glog (`sudo apt-get install libgoogle-glog-dev`).
 
-The Python library can be built with the following command (this requires Cython and a compiler with OpenMP support):
+The Python package can be built with the following command (this requires Cython and a compiler with OpenMP support):
 ```
 python3 setup.py build_ext -if
 (or to install in the current system) python3 setup.py install
 ```
-By default, the library is build for double precision floating points, for single precision set `USE_FLOAT = 1` in `setup.py`.
+By default, the library is built for double precision floating point numbers (`np.float64`), for single precision (`np.float32`) set `USE_FLOAT = 1` in `setup.py`.
 
 ## Usage
-Example usage with dropout
+Example usage with dropout perturbations:
 ```py
 import numpy as np
 import stochs
