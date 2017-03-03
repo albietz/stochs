@@ -1,4 +1,4 @@
-# stochs - fast stochastic solvers for machine learning in C++ and Cython
+# stochs - fast stochastic solvers for machine learning
 
 ## Introduction
 The stochs library provides efficient C++ implementations of stochastic optimization algorithms for common machine learning settings,
@@ -49,4 +49,7 @@ for epoch in range(100):
     # with no perturbations, use: solver.iterate_indexed(X, y, idxs)
 
     print(solver.compute_loss(Xtest, ytest))  # compute test loss
+# access parameter vector with solver.w()
 ```
+
+A more thorough example for sentiment analysis on the IMDB dataset is given in the `examples` folder.
