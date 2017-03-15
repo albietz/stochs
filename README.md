@@ -9,13 +9,12 @@ Currently, SGD, (S-)MISO and (N-)SAGA are supported, for dense and sparse data. 
 A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for Infinite Datasets with Finite-Sum Structure](https://arxiv.org/abs/1610.00970). arXiv 1610.00970, 2017.
 
 ## Installation
-The library requires Eigen >=3.3 (the `Eigen` headers folder needs to be downloaded or symlinked into an `include` directory at the root of the repository)
+The library requires Eigen >=3.3 (the `Eigen` headers folder needs to be downloaded or symlinked into an `include/` directory at the root of the repository)
 and glog (`sudo apt-get install libgoogle-glog-dev`).
 
-The Python package can be built with the following command (this requires Cython and a compiler with OpenMP support):
+The Python package can be built with the following command (this requires Cython and a compiler with OpenMP support such as gcc):
 ```
 python3 setup.py build_ext -if
-(or to install in the current system) python3 setup.py install
 ```
 By default, the library is built for double precision floating point numbers (`np.float64`), for single precision (`np.float32`) set `USE_FLOAT = 1` in `setup.py`.
 
@@ -33,13 +32,18 @@ solver = stochs.MISO(X.shape[1],  # number of features
                      lmbda=0.01,  # L2 regularization
                      loss=b'squared_hinge', # squared hinge loss
                      prox=b'l1',  # use L1 regularizer (by default 'none')
-                     prox_weight=0.1) # L1 regularization weight
+                     prox_weight=0.1, # L1 regularization weight
+                     average=False) # no iterate averaging
 
 n = X.shape[0]
 for epoch in range(100):
     if epoch == 2:
-        solver.start_decay()  # start decaying the step-size after a few epochs
-    idxs = np.random.choice(n, n)  # pick random indexes for one epoch
+        # start decaying the step-size after a few epochs
+        # if average=True, this also starts iterate averaging
+        solver.start_decay()
+
+    # pick random indexes for one epoch
+    idxs = np.random.choice(n, n)
 
     # apply 10% dropout
     Xperturbed = X[idxs] * np.random.binomial(1, 0.9, size=X.shape) / 0.9
@@ -52,4 +56,4 @@ for epoch in range(100):
 # access parameter vector with solver.w()
 ```
 
-A more thorough example for sentiment analysis on the IMDB dataset is given in the `examples` folder.
+A more thorough example for sentiment analysis on the IMDB dataset is given in the `examples` folder, with sparse solvers and non-uniform sampling.
