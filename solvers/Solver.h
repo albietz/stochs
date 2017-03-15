@@ -217,10 +217,10 @@ template <typename SolverT>
 class OneVsRest {
  public:
   template <typename... Args>
-  OneVsRest(const size_t nclasses, Args&&... args) : nclasses_(nclasses) {
+  OneVsRest(const size_t nclasses, const Args&... args) : nclasses_(nclasses) {
     solvers_.reserve(nclasses_);
     for (size_t i = 0; i < nclasses_; ++i) {
-      solvers_.emplace_back(std::forward<Args>(args)...);
+      solvers_.emplace_back(args...);
     }
   }
 
