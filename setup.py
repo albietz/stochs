@@ -2,8 +2,31 @@ from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 import numpy
+import os
 
 USE_FLOAT = 0  # use float (1) or double (0)
+
+
+eigen_dir = os.path.join('include', 'Eigen')
+if not os.path.exists(eigen_dir):
+    print('Downloading Eigen...')
+
+    from glob import glob
+    from urllib.request import urlretrieve
+    import shutil
+    import tarfile
+
+    if not os.path.exists('include'):
+        os.mkdir('include')
+    eigen_url = 'http://bitbucket.org/eigen/eigen/get/3.3.3.tar.gz'
+    tar_path = os.path.join('include', 'Eigen.tar.gz')
+    urlretrieve(eigen_url, tar_path)
+    with tarfile.open(tar_path, 'r') as tar:
+        tar.extractall('include')
+    thedir = glob(os.path.join('include', 'eigen-eigen-*'))[0]
+    shutil.move(os.path.join(thedir, 'Eigen'), eigen_dir)
+    print('done!')
+
 
 setup(
     name = 'stochs',

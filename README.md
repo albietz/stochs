@@ -9,10 +9,13 @@ Currently, SGD, (S-)MISO and (N-)SAGA are supported, for dense and sparse data. 
 A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for Infinite Datasets with Finite-Sum Structure](https://arxiv.org/abs/1610.00970). arXiv 1610.00970, 2017.
 
 ## Installation
-The library requires Eigen >=3.3 (the `Eigen` headers folder needs to be downloaded or symlinked into an `include/` directory at the root of the repository)
-and glog (`sudo apt-get install libgoogle-glog-dev`).
+The library requires Eigen >=3.3 (it will be downloaded automatically in the `setup.py` script unless the folder or symlink `include/Eigen` already exists)
+and glog. To install glog on Ubuntu, run:
+```
+sudo apt-get install libgoogle-glog-dev
+```
 
-The Python package can be built with the following command (this requires Cython and a compiler with OpenMP support such as gcc):
+The Python package can be built with the following command (this requires Cython and a compiler with OpenMP support such as gcc, you might need to change the `CC` and `CXX` environment variables on a mac):
 ```
 python3 setup.py build_ext -if
 ```
