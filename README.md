@@ -6,7 +6,7 @@ including situations with finite datasets augmented with random perturbations (e
 The library is mainly used from Python through a Cython extension.
 Currently, SGD, (S-)MISO and (N-)SAGA are supported, for dense and sparse data. See the following reference for details:
 
-A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for Infinite Datasets with Finite-Sum Structure](https://arxiv.org/abs/1610.00970). arXiv 1610.00970, 2017.
+A. Bietti and J. Mairal. [Stochastic Optimization with Variance Reduction for Infinite Datasets with Finite-Sum Structure](https://arxiv.org/abs/1610.00970). NIPS, 2017.
 
 ## Installation
 The library requires Eigen >=3.3 (it will be downloaded automatically in the `setup.py` script unless the folder or symlink `include/Eigen` already exists)
