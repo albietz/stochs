@@ -22,7 +22,26 @@ if not os.path.exists(eigen_dir):
     tar_path = os.path.join('include', 'Eigen.tar.gz')
     urlretrieve(eigen_url, tar_path)
     with tarfile.open(tar_path, 'r') as tar:
-        tar.extractall('include')
+        def is_within_directory(directory, target):
+            
+            abs_directory = os.path.abspath(directory)
+            abs_target = os.path.abspath(target)
+        
+            prefix = os.path.commonprefix([abs_directory, abs_target])
+            
+            return prefix == abs_directory
+        
+        def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+        
+            for member in tar.getmembers():
+                member_path = os.path.join(path, member.name)
+                if not is_within_directory(path, member_path):
+                    raise Exception("Attempted Path Traversal in Tar File")
+        
+            tar.extractall(path, members, numeric_owner=numeric_owner) 
+            
+        
+        safe_extract(tar, "include")
     thedir = glob(os.path.join('include', 'eigen-eigen-*'))[0]
     shutil.move(os.path.join(thedir, 'Eigen'), eigen_dir)
     print('done!')
